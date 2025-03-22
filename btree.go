@@ -52,15 +52,15 @@ func (node BNode) getPrt(idx uint16) uint64{
 
 
 func (node BNode) setPtr(idx uint16, val uint64) {
-	assert(1<= idx  && idx <= node.nkeys())
+	assert(idx <= node.nkeys())
 	pos := HEADER + 8*idx
 	binary.LittleEndian.PutUint64(node[pos:], val)
 }
 
 
-func offsetPos(node BNode, idx uint16) uint16 {
+func (node BNode) offsetPos( idx uint16) uint16 {
 	asset(1 <= idx && idx <= node.nkeys())
-	return HEADER + 8*node.nkeys() + 2*(idx - 1)
+	return HEADER + 8*node.nkeys() + 2*(idx - 1) // adjust for 1-based idx
 }
 
 
